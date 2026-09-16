@@ -53,6 +53,15 @@
     margin:0 0 14px; display:flex; align-items:center; gap:8px;
   }
   .section-title .dot{ width:8px; height:8px; border-radius:50%; background:var(--blue); }
+
+  .part-divider{ display:flex; align-items:center; gap:14px; margin:6px 0 22px; }
+  .part-divider .num{
+    flex-shrink:0; width:38px; height:38px; border-radius:11px; color:#fff;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px;
+  }
+  .part-divider .txt h2{ margin:0; font-size:19px; font-weight:800; color:var(--navy); letter-spacing:-0.01em; }
+  .part-divider .txt p{ margin:2px 0 0; font-size:12.5px; color:#64748b; font-weight:500; }
+  .part-divider .line{ flex:1; height:1px; background:#cbd5e1; }
   section{ margin-bottom:34px; }
 
   /* Diagnóstico */
@@ -80,10 +89,13 @@
   .timeline-track .line{ flex:0.4; height:2px; background:#cbd5e1; margin-top:26px; }
 
   .phases{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
+    display:flex; align-items:stretch; flex-wrap:wrap; gap:14px;
   }
-  @media (max-width:980px){ .phases{grid-template-columns:1fr 1fr;} }
-  @media (max-width:620px){ .phases{grid-template-columns:1fr;} }
+  .phase-card{ flex:1 1 220px; }
+  .phase-arrow{
+    flex:0 0 22px; display:flex; align-items:center; justify-content:center;
+  }
+  @media (max-width:980px){ .phase-arrow{ display:none; } }
 
   .phase-card{
     background:#fff; border-radius:16px; padding:18px 18px 20px; box-shadow:0 2px 12px rgba(0,40,88,0.06);
@@ -120,6 +132,21 @@
     border-radius:10px; padding:12px 14px; box-shadow:0 2px 12px rgba(0,40,88,0.06);
   }
   .scope-note b{ color:var(--navy); }
+
+  /* Mecanismo — el cómo */
+  .mech-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  @media (max-width:900px){ .mech-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:600px){ .mech-grid{ grid-template-columns:1fr; } }
+  .mech-item{
+    background:#fff; border-radius:14px; padding:16px 16px 18px; box-shadow:0 2px 12px rgba(0,40,88,0.06);
+    border-top:4px solid var(--c);
+  }
+  .mech-item .mech-num{
+    display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%;
+    background:var(--c); color:#fff; font-size:12px; font-weight:800; margin-bottom:8px;
+  }
+  .mech-item h4{ margin:0 0 6px; font-size:14px; font-weight:800; color:var(--navy); }
+  .mech-item p{ margin:0; font-size:12.5px; color:#475569; line-height:1.5; }
 
   /* Dos columnas: Desarrollo de otros + Alto potencial */
   .cols2{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
@@ -173,18 +200,24 @@
       </div>
       <div class="box prop">
         <h3>Propuesta</h3>
-        <p>Definir <b style="color:#002858;">cohortes fijas de revisión</b> en el año fiscal, y dejar constancia explícita de <b style="color:#002858;">quién revisó cada PDI y cuándo</b>: el supervisor y el responsable de RRHH Oficina correspondiente (Venezuela, Colombia, Argentina o Corporativo).</p>
+        <p>Definir <b style="color:#002858;">fases fijas de revisión</b> en el año, y dejar constancia explícita de <b style="color:#002858;">quién revisó cada PDI y cuándo</b>: el supervisor y el responsable de RRHH Oficina correspondiente (Venezuela, Colombia, Argentina o Corporativo).</p>
       </div>
     </div>
   </section>
 
   <section class="anim">
-    <p class="section-title"><span class="dot"></span>El PDI dentro de las 4 fases del GDDD</p>
+    <div class="part-divider">
+      <span class="num" style="background:#0084d0">1</span>
+      <div class="txt">
+        <h2>Qué se propone</h2>
+        <p>Seguimiento del PDI con fases propias, apalancado sobre el calendario del ciclo GDDD</p>
+      </div>
+      <div class="line"></div>
+    </div>
     <div class="phases">
 
       <div class="phase-card" style="--c:#0084d0">
         <span class="tag">① Planificación</span>
-        <div class="mes">Septiembre</div>
         <h3>Construcción del PDI</h3>
         <p class="gddd">Conocer objetivos del negocio, definir competencias a desarrollar, claridad de expectativas del rol.</p>
         <div class="pdi">
@@ -196,8 +229,12 @@
         </div>
       </div>
 
+      <div class="phase-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h13M13 6l6 6-6 6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
       <div class="phase-card" style="--c:#00a499">
-        <span class="tag">② Apoyo y Seguimiento — Cohorte 1</span>
+        <span class="tag">② Fase 1</span>
         <div class="mes">Febrero</div>
         <h3>Primera revisión</h3>
         <p class="gddd">Detección temprana de dificultades, corrección de desvíos, búsqueda de recursos de apoyo.</p>
@@ -205,14 +242,18 @@
           <span class="lbl">Rol de cada uno</span>
           <div class="roles">
             <div class="role"><span class="who">Colaborador:</span>presenta evidencia de avance de sus acciones.</div>
-            <div class="role"><span class="who">Supervisor:</span>revisa el PDI con el colaborador y registra su estado (vigente / ajustado / en riesgo).</div>
-            <div class="role"><span class="who">RRHH Oficina:</span>certifica que la revisión de la Cohorte 1 quedó registrada para su alcance (país o corporativo).</div>
+            <div class="role"><span class="who">Supervisor:</span>revisa el PDI con el colaborador. Según lo que se revise y acuerde en la sesión, se pueden hacer actualizaciones al plan.</div>
+            <div class="role"><span class="who">RRHH Oficina:</span>certifica que la revisión de la Fase 1 quedó registrada para su alcance (país o corporativo).</div>
           </div>
         </div>
       </div>
 
+      <div class="phase-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h13M13 6l6 6-6 6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
       <div class="phase-card" style="--c:#f2b705">
-        <span class="tag">③ Reconocimiento — Cohorte 2</span>
+        <span class="tag">③ Fase 2</span>
         <div class="mes">Agosto</div>
         <h3>Segunda revisión</h3>
         <p class="gddd">Reforzar conductas efectivas y desempeño superior, sostener la motivación y el compromiso.</p>
@@ -220,23 +261,27 @@
           <span class="lbl">Rol de cada uno</span>
           <div class="roles">
             <div class="role"><span class="who">Colaborador:</span>comparte evidencia de aplicación real, no solo asistencia.</div>
-            <div class="role"><span class="who">Supervisor:</span>revisa nuevamente el PDI, reconoce avances y deja el segundo registro del año.</div>
-            <div class="role"><span class="who">RRHH Oficina:</span>certifica que la Cohorte 2 quedó registrada y consolida cobertura por país.</div>
+            <div class="role"><span class="who">Supervisor:</span>revisa el PDI con el colaborador. Según lo que se revise y acuerde en la sesión, se pueden hacer actualizaciones al plan.</div>
+            <div class="role"><span class="who">RRHH Oficina:</span>certifica que la revisión de la Fase 2 quedó registrada y consolida cobertura por país.</div>
           </div>
         </div>
       </div>
 
+      <div class="phase-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h13M13 6l6 6-6 6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
       <div class="phase-card" style="--c:#470a68">
-        <span class="tag">④ Evaluación — Cierre</span>
+        <span class="tag">④ Cierre</span>
         <div class="mes">Septiembre</div>
-        <h3>Cumplimiento del ciclo</h3>
+        <h3>Revisión de competencias</h3>
         <p class="gddd">Evaluar objetivos y competencias del año, identificar tendencias, documentar resultados. Sin sorpresas.</p>
         <div class="pdi">
           <span class="lbl">Rol de cada uno</span>
           <div class="roles">
             <div class="role"><span class="who">Colaborador:</span>recibe el cierre del ciclo y el insumo para el siguiente PDI.</div>
-            <div class="role"><span class="who">Supervisor:</span>evalúa el cumplimiento total del PDI; ese resultado entra a su propia evaluación de "Desarrollo de Otros".</div>
-            <div class="role"><span class="who">RRHH Oficina:</span>consolida cumplimiento y trazabilidad del ciclo por país/corporativo y reporta a Desarrollo Organizacional.</div>
+            <div class="role"><span class="who">Supervisor:</span>revisa las competencias desarrolladas en el ciclo (no es una evaluación del PDI); ese insumo entra a su propia evaluación de "Desarrollo de Otros".</div>
+            <div class="role"><span class="who">RRHH Oficina:</span>consolida el estado de revisión y trazabilidad del ciclo por país/corporativo y reporta a Desarrollo Organizacional.</div>
           </div>
         </div>
       </div>
@@ -245,11 +290,19 @@
   </section>
 
   <section class="anim">
-    <p class="section-title"><span class="dot"></span>Cohortes de revisión: quién revisó y cuándo</p>
+    <div class="part-divider">
+      <span class="num" style="background:#470a68">2</span>
+      <div class="txt">
+        <h2>Cómo se garantiza su ejecución</h2>
+        <p>Trazabilidad, control y consecuencia — para que esto no vuelva a quedar solo en el papel</p>
+      </div>
+      <div class="line"></div>
+    </div>
+    <p class="section-title"><span class="dot"></span>Fases de revisión: quién revisó y cuándo</p>
     <table>
       <thead>
         <tr>
-          <th>Cohorte</th>
+          <th>Fase</th>
           <th>Cuándo</th>
           <th>El Supervisor certifica</th>
           <th>RRHH Oficina certifica</th>
@@ -257,26 +310,62 @@
       </thead>
       <tbody>
         <tr>
-          <td class="cohorte">Cohorte 1</td>
+          <td class="cohorte">Fase 1</td>
           <td class="cuando">Febrero</td>
           <td>Revisó el PDI con el colaborador y registró su estado (vigente / ajustado / en riesgo).</td>
           <td>Que la revisión quedó registrada para cada colaborador de su alcance.</td>
         </tr>
         <tr>
-          <td class="cohorte">Cohorte 2</td>
+          <td class="cohorte">Fase 2</td>
           <td class="cuando">Agosto</td>
-          <td>Revisó el PDI, reconoció avances y dejó la segunda evidencia del año.</td>
-          <td>Cobertura de la Cohorte 2 y reporte de vacíos de revisión, si los hay.</td>
+          <td>Revisó y actualizó el plan de acuerdo a los avances; dejó la segunda evidencia del año.</td>
+          <td>Cobertura de la Fase 2 y reporte de vacíos de revisión, si los hay.</td>
         </tr>
         <tr>
           <td class="cohorte">Cierre de ciclo</td>
           <td class="cuando">Septiembre</td>
-          <td>Evaluó el cumplimiento total del PDI (alimenta su evaluación de "Desarrollo de Otros").</td>
+          <td>Revisó las competencias desarrolladas en el ciclo (ese insumo alimenta su evaluación de "Desarrollo de Otros").</td>
           <td>Cumplimiento y trazabilidad de todo el ciclo, por país/corporativo, hacia Desarrollo Organizacional.</td>
         </tr>
       </tbody>
     </table>
     <div class="scope-note"><b>Alcance de "RRHH Oficina":</b> el responsable que certifica depende del país del colaborador (Venezuela, Colombia o Argentina) o es el rol Corporativo cuando el colaborador reporta a una estructura regional/multipaís.</div>
+  </section>
+
+  <section class="anim">
+    <p class="section-title"><span class="dot"></span>El portal del PDI como mecanismo de control</p>
+    <div class="mech-grid">
+      <div class="mech-item" style="--c:#0084d0">
+        <span class="mech-num">1</span>
+        <h4>Agendamiento desde el portal</h4>
+        <p>El supervisor programa cada sesión de revisión (Fase 1, Fase 2, Cierre) directamente en el portal del PDI. Queda la fecha exacta agendada, no solo el plazo límite.</p>
+      </div>
+      <div class="mech-item" style="--c:#00a499">
+        <span class="mech-num">2</span>
+        <h4>Estado automático por PDI</h4>
+        <p>El portal marca cada PDI como Agendada / Realizada / Pendiente / Vencida según las fechas, sin que nadie tenga que reportarlo manualmente.</p>
+      </div>
+      <div class="mech-item" style="--c:#f2b705">
+        <span class="mech-num">3</span>
+        <h4>Bitácora de cambios</h4>
+        <p>Toda modificación al PDI (objetivos, acciones, comentarios) queda registrada con fecha y autor, visible para RRHH Oficina sin tener que pedir el documento.</p>
+      </div>
+      <div class="mech-item" style="--c:#470a68">
+        <span class="mech-num">4</span>
+        <h4>Recordatorio automático</h4>
+        <p>Si el supervisor no ha agendado la sesión con cierta anticipación al cierre de la fase, el portal le envía un recordatorio, con copia a RRHH Oficina.</p>
+      </div>
+      <div class="mech-item" style="--c:#a8ad00">
+        <span class="mech-num">5</span>
+        <h4>Escalamiento</h4>
+        <p>Si pasado un mes del cierre de la Fase 2 la sesión de revisión aún no ha sido agendada, el portal notifica automáticamente a RRHH Oficina.</p>
+      </div>
+      <div class="mech-item" style="--c:#0084d0">
+        <span class="mech-num">6</span>
+        <h4>Tablero para RRHH Oficina</h4>
+        <p>Vista consolidada por país/área con % de PDIs agendados, realizados y con evidencia de actualización — para detectar equipos rezagados a tiempo, no al cierre del ciclo.</p>
+      </div>
+    </div>
   </section>
 
   <section class="anim">
@@ -288,8 +377,8 @@
         <h3>Entra a la evaluación del supervisor</h3>
         <p class="sub">Dentro de la competencia transversal "Desarrollo de Otros"</p>
         <ul>
-          <li><span class="num">1</span>% de su equipo con PDI vigente, construido en la ventana de Planificación de Septiembre.</li>
-          <li><span class="num">2</span>Cohorte 1 y Cohorte 2 realmente ejecutadas y certificadas (por él y por RRHH Oficina), no solo "hecho / no hecho".</li>
+          <li><span class="num">1</span>% de su equipo con PDI vigente, construido en la ventana de Planificación.</li>
+          <li><span class="num">2</span>Fase 1 y Fase 2 realmente ejecutadas y certificadas (por él y por RRHH Oficina), no solo "hecho / no hecho".</li>
           <li><span class="num">3</span>Calidad de las acciones: evidencia de aplicación real, no solo asistencia a cursos.</li>
           <li><span class="num">4</span>Para Alto Potencial: evidencia concreta de aceleración durante el ciclo.</li>
         </ul>
@@ -298,11 +387,11 @@
       <div class="feature hp">
         <div class="deco"></div>
         <h3>Aceleración diferenciada — Alto Potencial</h3>
-        <p class="sub">Mismas cohortes, pero con revisión mensual y más participantes</p>
+        <p class="sub">Mismas fases, pero con revisión mensual y más participantes</p>
         <ul>
           <li><span class="num">1</span>Revisión mensual: 2 de cada 3 meses es conversación Supervisor + Colaborador (check-in corto de avance).</li>
           <li><span class="num">2</span>El tercer mes se suma RRHH Oficina directamente a la conversación, no solo a certificar el registro.</li>
-          <li><span class="num">3</span>Cada revisión mensual queda registrada igual que las Cohortes 1 y 2, con quién revisó y cuándo.</li>
+          <li><span class="num">3</span>Cada revisión mensual queda registrada igual que las Fases 1 y 2, con quién revisó y cuándo.</li>
           <li><span class="num">4</span>El avance del PDI de Alto Potencial se presenta también en la sesión de talent review, con nombre y apellido.</li>
         </ul>
       </div>
